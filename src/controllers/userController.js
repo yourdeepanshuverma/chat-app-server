@@ -45,8 +45,10 @@ const registerUser = asyncHandler(async (req, res, next) => {
       .json({
         _id: user._id,
         name: user.name,
-        email: user.email,
-        pic: user.pic,
+        username: user.username,
+        avatar: user.avatar,
+        bio: user.bio,
+        createdAt: user.createdAt,
       });
   } else {
     next(new ErrorHandler(400, "User not created"));
