@@ -27,6 +27,8 @@ const verifyAdmin = asyncHandler(async (req, res, next) => {
     .cookie("admin-token", verifiedAdmin, {
       maxAge: 1000 * 60 * 60 * 24 * 15,
       httpOnly: true,
+      sameSite: "none",
+      secure: true,
     })
     .json({
       message: "Verified Admin",
@@ -40,6 +42,8 @@ const logoutAdmin = asyncHandler(async (req, res, next) => {
     .clearCookie("admin-token", {
       maxAge: 0,
       httpOnly: true,
+      sameSite: "none",
+      secure: true,
     })
     .json({
       message: "Admin Logged Out",

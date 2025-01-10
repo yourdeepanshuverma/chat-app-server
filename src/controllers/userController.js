@@ -41,6 +41,8 @@ const registerUser = asyncHandler(async (req, res, next) => {
       .cookie("Chat", generateToken(user._id), {
         maxAge: 1000 * 60 * 60 * 24 * 30,
         httpOnly: true,
+        sameSite: "none",
+        secure: true,
       })
       .json({
         _id: user._id,
@@ -70,6 +72,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
       .cookie("Chat", generateToken(user._id), {
         maxAge: 1000 * 60 * 60 * 24 * 30,
         httpOnly: true,
+        sameSite: "none",
+        secure: true,
       })
       .json({
         _id: user._id,
@@ -86,10 +90,17 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 // Logout user
 const logoutUser = asyncHandler(async (req, res) => {
-  res.cookie("Chat", "", { maxAge: 0 }).json({
-    status: true,
-    message: "Logged out successfully.",
-  });
+  res
+    .cookie("Chat", "", {
+      maxAge: 0,
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    })
+    .json({
+      status: true,
+      message: "Logged out successfully.",
+    });
 });
 
 // Get user profile
