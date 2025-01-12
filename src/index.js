@@ -98,7 +98,7 @@ io.on("connection", async (socket) => {
         _id: user.id,
         name: user.name,
       },
-      chat: chatId,
+      chatId,
       createdAt: new Date().toISOString(),
     };
 

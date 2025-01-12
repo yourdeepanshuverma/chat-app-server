@@ -140,7 +140,7 @@ const deleteChat = asyncHandler(async (req, res, next) => {
   }
 
   const messagesWithAtatchments = await Message.find({
-    chat: chatId,
+    chatId,
     attachments: { $exists: true, $ne: [] },
   });
 
@@ -153,14 +153,14 @@ const deleteChat = asyncHandler(async (req, res, next) => {
   await Promise.all([
     deleteFromCloudinary(public_ids),
     chat.deleteOne(),
-    Message.deleteMany({ chat: chatId }),
+    Message.deleteMany({ chatId }),
   ]);
 
   const socketMembers = chat.members.filter(
     (mem) => mem._id.toString() !== req.user._id.toString()
   );
 
-  emitEvent(req, ALERT, socketMembers);
+  emitEvent(req, ALERT, socketMembers, chat.name);
 
   res.status(200).json({ status: true, message: "Group Chat deleted" });
 });
