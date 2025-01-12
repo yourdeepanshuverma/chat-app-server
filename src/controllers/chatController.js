@@ -160,9 +160,9 @@ const deleteChat = asyncHandler(async (req, res, next) => {
     (mem) => mem._id.toString() !== req.user._id.toString()
   );
 
-  emitEvent(req, ALERT, socketMembers, chat.name);
+  emitEvent(req, REFETCH_CHATS, socketMembers);
 
-  res.status(200).json({ status: true, message: "Group Chat deleted" });
+  res.status(200).json({ status: true, message: "Chat deleted" });
 });
 
 // Add new members to the group.
